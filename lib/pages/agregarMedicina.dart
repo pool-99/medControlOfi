@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:met_control/pages/agregarMedicina.dart';
 
-void main() {
-  runApp(MedicamentosApp());
-}
+import 'package:met_control/screens/home.dart';
 
-class MedicamentosApp extends StatelessWidget {
+
+
+class OtraPagina extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,6 +13,7 @@ class MedicamentosApp extends StatelessWidget {
     );
   }
 }
+
 
 class Medicamentos extends StatefulWidget {
   @override
@@ -27,7 +27,7 @@ class _MedicamentosState extends State<Medicamentos> {
   final List<Widget> _pages = [
     PlaceholderWidget('Hoy Page'),
     PlaceholderWidget('Mi Historia Page'),
-    MedicamentosPage(),
+    OtraPaginaa(),
     PlaceholderWidget('Consejos Page'),
   ];
 
@@ -77,36 +77,54 @@ class PlaceholderWidget extends StatelessWidget {
   }
 }
 
-class MedicamentosPage extends StatelessWidget {
+class OtraPaginaa extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Contenido de la página de Medicamentos
-          Text('Contenido de Medicamentos'),
-
-          // Botón de agregar
-          ElevatedButton.icon(
-            onPressed: () {
-              // Navegar a otra página al presionar el botón
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => OtraPagina(),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Fecha: ${DateTime.now().toString()}'),
+            SizedBox(height: 16),
+            Text('Agregar foto de medicamento'),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      // Acciones al hacer clic en el botón de agregar foto
+                      print('Botón de agregar foto presionado');
+                    },
+                    icon: Icon(Icons.add_a_photo),
+                    label: Text('Agregar Foto'),
+                  ),
                 ),
-              );
-            },
-            icon: Icon(Icons.add),
-            label: Text('Agregar medicamentos'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(209, 32, 197, 120), // Color del botón
+              ],
             ),
-          ),
-        ],
+            SizedBox(height: 16),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Nombre de Medicamento'),
+            ),
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Text('Dosis:'),
+                SizedBox(width: 8),
+                Expanded(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Dosis',
+                      suffixText: 'Mg',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
