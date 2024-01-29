@@ -1,75 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:met_control/screens/welcome.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+
+
 
 
 class LoginScreen extends StatelessWidget {
+  final GlobalKey<FormBuilderState> loginFormKey;
+
+  LoginScreen({required this.loginFormKey});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFieldWithIcon(
-            icon: Icons.email,
-            hintText: 'Correo electrónico',
-          ),
-          TextFieldWithIcon(
-            icon: Icons.lock,
-            hintText: 'Contraseña',
-            isPassword: true,
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              // Navegar a la nueva página cuando se presiona el botón
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Bienvenida()), // Reemplaza HomeScreen con el nombre de tu nueva página
-              );
-            },
-            child: Text('Iniciar sesión'),
-          ),
-        ],
+      child: FormBuilder(
+        key: loginFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FormBuilderTextField(
+              name: 'email',
+              decoration: InputDecoration(labelText: 'Correo electrónico'),
+              validator: FormBuilderValidators.email(context),
+            ),
+            FormBuilderTextField(
+              name: 'password',
+              decoration: InputDecoration(labelText: 'Contraseña'),
+              obscureText: true,
+              validator: FormBuilderValidators.required(context),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                        MaterialPageRoute(builder: (context) => Bienvenida()), // Reemplaza OtraPagina con el nombre de tu nueva página
+                  );
+              },
+              child: Text('Iniciar sesión'),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Bienvenido a la Página de Inicio'),
-      ),
-      body: Center(
-        child: Text('Contenido de la página de inicio'),
-      ),
-    );
-  }
-}
-
-class TextFieldWithIcon extends StatelessWidget {
-  final IconData icon;
-  final String hintText;
-  final bool isPassword;
-
-  const TextFieldWithIcon({
-    Key? key,
-    required this.icon,
-    required this.hintText,
-    this.isPassword = false,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      obscureText: isPassword,
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon),
-        hintText: hintText,
-      ),
-    );
-  }
+class FormBuilderValidators {
+  static required(BuildContext context) {}
+  
+  static email(BuildContext context) {}
 }

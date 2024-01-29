@@ -20,13 +20,13 @@ class Medicamentos extends StatefulWidget {
 }
 
 class _MedicamentosState extends State<Medicamentos> {
-  int _currentIndex = 2; // Índice inicial para "Hoy"
+  int _currentIndex = 2; // Índice inicial para "Medicamentos"
 
   // Lista de páginas correspondientes a cada ícono del ConvexAppBar
   final List<Widget> _pages = [
     PlaceholderWidget('Hoy Page'),
     PlaceholderWidget('Mi Historia Page'),
-    PlaceholderWidget('Medicamentos Page'),
+    MedicamentosPage(),
     PlaceholderWidget('Consejos Page'),
   ];
 
@@ -72,6 +72,53 @@ class PlaceholderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(text),
+    );
+  }
+}
+
+class MedicamentosPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Contenido de la página de Medicamentos
+          Text('Contenido de Medicamentos'),
+
+          // Botón de agregar
+          ElevatedButton.icon(
+            onPressed: () {
+              // Navegar a otra página al presionar el botón
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OtraPagina(),
+                ),
+              );
+            },
+            icon: Icon(Icons.add),
+            label: Text('Agregar medicamentos'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color.fromARGB(209, 32, 197, 120), // Color del botón
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class OtraPagina extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Otra Página'),
+      ),
+      body: Center(
+        child: Text('Contenido de Otra Página'),
+      ),
     );
   }
 }
