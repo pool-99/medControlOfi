@@ -38,16 +38,11 @@ dependencies:
   google_fonts: ^6.1.0
   convex_bottom_bar: ^3.2.0
   animated_appbar: ^2.1.5
-<<<<<<< HEAD
   flutter_form_builder: ^9.2.0
   fluttertoast: ^8.0.7
   floating_action_bubble: ^1.1.4
   
 
-=======
-  circular_countdown_timer: ^0.2.3
-  analog_clock: 0.1.1
->>>>>>> 6c20ca5e6e8e033d2a694b602562e41b8006c9bc
 
 dev_dependencies:
   flutter_test:
