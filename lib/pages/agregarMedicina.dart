@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
-import 'package:met_control/screens/home.dart';
+
 
 
 
@@ -77,10 +77,64 @@ class PlaceholderWidget extends StatelessWidget {
   }
 }
 
-class OtraPaginaa extends StatelessWidget {
+
+
+class NuevaPagina extends StatelessWidget {
+  final String nombreMedicamento;
+  final String cantidadDosis;
+
+  NuevaPagina({
+    required this.nombreMedicamento,
+    required this.cantidadDosis,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green, // Establecer el color de fondo verde
+        title: Text('Medicinas Agregadas'), // Cambiar el título
+        leading: IconButton(
+          icon: Icon(Icons.person), // Agregar el icono de usuario
+          onPressed: () {
+            // Acciones al hacer clic en el icono de usuario
+            print('Icono de usuario presionado');
+          },
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text('Nombre de la medicina: $nombreMedicamento'),
+            SizedBox(height: 16),
+            Text('Cantidad de dosis: $cantidadDosis'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+class OtraPaginaa extends StatefulWidget {
+  @override
+  _OtraPaginaaState createState() => _OtraPaginaaState();
+}
+
+class _OtraPaginaaState extends State<OtraPaginaa> {
+  String _presentacionSeleccionada = 'Pastilla';
+  TextEditingController _nombreMedicamentoController = TextEditingController();
+  TextEditingController _cantidadDosisController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -105,22 +159,39 @@ class OtraPaginaa extends StatelessWidget {
             ),
             SizedBox(height: 16),
             TextFormField(
+              controller: _nombreMedicamentoController,
               decoration: InputDecoration(labelText: 'Nombre de Medicamento'),
             ),
             SizedBox(height: 16),
-            Row(
-              children: [
-                Text('Dosis:'),
-                SizedBox(width: 8),
-                Expanded(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Dosis',
-                      suffixText: 'Mg',
-                    ),
-                  ),
-                ),
-              ],
+            TextFormField(
+              controller: _cantidadDosisController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: 'Cantidad de Dosis'),
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _presentacionSeleccionada.isNotEmpty
+                  ? () {
+                      // Acciones al hacer clic en el botón "Continuar"
+                      print('Botón Continuar presionado');
+
+                      // Obtener el nombre y cantidad de dosis desde los controladores
+                      String nombreMedicamento = _nombreMedicamentoController.text;
+                      String cantidadDosis = _cantidadDosisController.text;
+
+                      // Navegar a otra página y pasar la información
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NuevaPagina(
+                            nombreMedicamento: nombreMedicamento,
+                            cantidadDosis: cantidadDosis,
+                          ),
+                        ),
+                      );
+                    }
+                  : null,
+              child: Text('Continuar'),
             ),
           ],
         ),
