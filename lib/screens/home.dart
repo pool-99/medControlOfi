@@ -197,7 +197,7 @@ class ConsejosPage extends StatelessWidget {
 }
 
 class MyGrid extends StatelessWidget {
-  final List<String> imageUrls = [
+  final List<String> imageConsejos = [
     'assets/img/Consejo01.png',
     'assets/img/Consejo02.png',
     'assets/img/Consejo03.png',
@@ -221,16 +221,16 @@ class MyGrid extends StatelessWidget {
     'Estres',
   ];
 
-  final List<String> urls = [
-    'URL_1',
-    'URL_2',
-    'URL_3',
-    'URL_4',
-    'URL_5',
-    'URL_6',
-    'URL_7',
-    'URL_8',
-    'URL_9',
+  final List<String> descriptions = [
+    'Come alimentos saludables para mantener un estilo de vida equilibrado.',
+    'La vacunación es crucial para prevenir enfermedades y proteger a la comunidad.',
+    'Evita el consumo de alcohol para cuidar tu salud.',
+    'Deja de fumar para mejorar tu salud pulmonar y cardiovascular.',
+    'Realiza caminatas diarias para mantener un cuerpo activo y saludable.',
+    'Cuida a los más pequeños y asegúrate de satisfacer sus necesidades.',
+    'Realiza chequeos médicos periódicos para detectar posibles problemas de salud.',
+    'Adopta hábitos que promuevan un cuerpo sano y fuerte.',
+    'Gestiona el estrés de manera efectiva para mejorar tu bienestar emocional.',
   ];
 
   @override
@@ -241,12 +241,24 @@ class MyGrid extends StatelessWidget {
         crossAxisSpacing: 8.0,
         mainAxisSpacing: 8.0,
       ),
-      itemCount: imageUrls.length,
+      itemCount: imageConsejos.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
-            // Aquí puedes manejar la navegación a la URL correspondiente
-            print('Tocaste la parcela ${index + 1}: ${urls[index]}');
+            // Mostrar el widget de detalle cuando se toque una imagen
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return DetalleConsejo(
+                  imageConsejo: imageConsejos[index],
+                  title: titles[index],
+                  description: descriptions[index],
+                  onClose: () {
+                    Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                  },
+                );
+              },
+            );
           },
           child: Container(
             decoration: BoxDecoration(
@@ -259,7 +271,7 @@ class MyGrid extends StatelessWidget {
                 
                 ClipOval(
                 child: Image.network(
-                  imageUrls[index],
+                  imageConsejos[index],
                   width: 100,
                   height: 100,
                   fit: BoxFit.cover,
@@ -277,6 +289,50 @@ class MyGrid extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class DetalleConsejo extends StatelessWidget {
+  final String imageConsejo;
+  final String title;
+  final VoidCallback onClose;
+  final String description;
+
+
+  DetalleConsejo({required this.imageConsejo, required this.title, required this.description, required this.onClose});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Column(
+        children: [
+          Image.network(
+            imageConsejo,
+            width: 150,
+            height: 150,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(height: 8.0),
+          
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            description,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16.0),
+          ),
+          SizedBox(height: 8.0),
+          SizedBox(height: 30.0),
+          ElevatedButton(
+            onPressed: onClose,
+            child: Text('Volver a Consejos'),
+          ),
+        ],
+      ),
     );
   }
 }
